@@ -1,0 +1,30 @@
+Name: build-container
+SchemaVersion: "1.0"
+
+Actions:
+  build-and-push-to-ecr:
+    # Identifies the action. Do not modify this value.
+    Identifier: codecatalyst-labs/push-to-ecr@v1.0.1
+
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Required
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    # Required; You can use an environment, AWS account connection, and role to access AWS resources.
+    Environment:
+      Name: sandbox
+      Connections:
+        - Name: lanandra-sandbox
+          Role: CodeCatalystWorkflowDevelopmentRole-lanandra-sandbox
+
+
+    # Defines the action's properties.
+    Configuration:
+      # Required; type: string; description: The name to use for the repository. 
+      # The repository name may be specified on its own (such as nginx-web-app) 
+      # or it can be prepended with a namespace to group the repository into a category (such as project-a/nginx-web-app)
+      RepositoryName: steampipe-container-agent
+      ImageTag: v0.1.0
+      AWSRegion: ap-southeast-1
